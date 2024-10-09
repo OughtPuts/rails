@@ -1534,7 +1534,7 @@ require "test_helpers/multiple_assertions"
 class NumberTest < ActiveSupport::TestCase
   include MultipleAssertions
 
-  test "420 is a multiple of forty two" do
+  test "420 is a multiple of 42" do
     assert_multiple_of_forty_two 420
   end
 end
@@ -1578,9 +1578,9 @@ Testing the response to your request by asserting the presence of key HTML eleme
 
 There are two forms of `assert_select`:
 
-`assert_select(selector, [equality], [message])` ensures that the equality condition is met on the selected elements through the selector. The selector may be a CSS selector expression (String) or an expression with substitution values.
+`assert_select(selector, [equality], [message])` ensures that the elements, selected through the `selector`, are equal to the `equality` value. The selector may be a CSS selector expression (String) or an expression with substitution values.
 
-`assert_select(element, selector, [equality], [message])` ensures that the equality condition is met on all the selected elements through the selector starting from the _element_ (instance of `Nokogiri::XML::Node` or `Nokogiri::XML::NodeSet`) and its descendants.
+`assert_select(element, selector, [equality], [message])` ensures that all the selected elements are equal to the `equality` value starting from the _element_ (which is an instance of `Nokogiri::XML::Node` or `Nokogiri::XML::NodeSet`) and its descendants.
 
 For example, you could verify the contents on the title element in your response with:
 
@@ -1639,10 +1639,10 @@ end
 
 Partial templates - usually called "partials" - are another device for breaking the rendering process into more manageable chunks. With partials, you can extract pieces of code from your templates to separate files and reuse them throughout your templates.
 
-View tests provide an opportunity to test that partials render content the way you expect. View partial tests reside in `test/views/` and inherit from `ActionView::TestCase`.
+View tests provide an opportunity to test that partials render content the way you expect. View partial tests can be stored in `test/views/` and inherit from `ActionView::TestCase`.
 
 To render a partial, call `render` like you would in a template. The content is
-available through the test-local `#rendered` method:
+available through the test-local `rendered` method:
 
 ```ruby
 class ArticlePartialTest < ActionView::TestCase
@@ -1821,10 +1821,6 @@ access to Rails' helper methods such as `link_to` or `pluralize`.
 Testing Mailers
 --------------------
 
-Testing mailer classes requires some specific tools to do a thorough job.
-
-### Keeping the Postman in Check
-
 Your mailer classes - like every other part of your Rails application - should be tested to ensure that they are working as expected.
 
 The goals of testing your mailer classes are to ensure that:
@@ -1835,13 +1831,13 @@ The goals of testing your mailer classes are to ensure that:
 
 #### From All Sides
 
-There are two aspects of testing your mailer, the unit tests and the functional tests. In the unit tests, you run the mailer in isolation with tightly controlled inputs and compare the output to a known value (a fixture). In the functional tests you don't so much test the minute details produced by the mailer; instead, we test that our controllers and models are using the mailer in the right way. You test to prove that the right email was sent at the right time.
+There are two aspects of testing your mailer, the unit tests and the functional tests. In the unit tests, you run the mailer in isolation with tightly controlled inputs and compare the output to a known value (a [fixture](testing.html#fixtures)). In the functional tests you don't so much test the details produced by the mailer; instead, we test that our controllers and models are using the mailer in the right way. You test to prove that the right email was sent at the right time.
 
 ### Unit Testing
 
 In order to test that your mailer is working as expected, you can use unit tests to compare the actual results of the mailer with pre-written examples of what should be produced.
 
-#### Revenge of the Fixtures
+#### Mailer Fixtures
 
 For the purposes of unit testing a mailer, fixtures are used to provide an example of how the output _should_ look. Because these are example emails, and not Active Record data like the other fixtures, they are kept in their own subdirectory apart from the other fixtures. The name of the directory within `test/fixtures` directly corresponds to the name of the mailer. So, for a mailer named `UserMailer`, the fixtures should reside in `test/fixtures/user_mailer` directory.
 
